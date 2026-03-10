@@ -1,3 +1,6 @@
+/* eslint-disable no-unused-vars */
+
+// eslint-disable-next-line no-unused-vars
 import React, { useContext, useEffect, useState } from "react";
 import { useClerk, UserButton, useUser } from "@clerk/clerk-react";
 import { Link, useNavigate } from "react-router-dom";
@@ -45,7 +48,7 @@ const Navbar = () => {
               <Zap size={24} className="text-white" />
             </div>
             <span className="text-2xl font-bold bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 bg-clip-text text-transparent">
-              Prodigy
+              College Placement System
             </span>
           </div>
 
@@ -60,6 +63,11 @@ const Navbar = () => {
                   <Briefcase size={18} />
                   <span className="font-medium">My Jobs</span>
                 </Link>
+
+
+               
+
+
                 <div className="flex items-center gap-3">
                   <div className="hidden md:block">
                     <span className="text-sm font-medium text-gray-600">
@@ -78,12 +86,19 @@ const Navbar = () => {
                 </div>
               </>
             ) : (
+
+              
+
+
+
+
+
               <>
                 <button
                   onClick={(e) => setShowRecruiterLogin(true)}
                   className="hidden md:block text-sm font-medium text-gray-600 hover:text-blue-600 transition-all duration-200 px-4 py-2 rounded-lg hover:bg-blue-50"
                 >
-                  Recruiter Portal
+                  Admin Portal
                 </button>
                 <button
                   onClick={(e) => openSignIn()}
@@ -98,7 +113,7 @@ const Navbar = () => {
       </div>
 
       {/* Add this to your tailwind.config.js or CSS file */}
-      <style jsx>{`
+      <style >{`
         @keyframes slideDown {
           from {
             transform: translateY(-100%);

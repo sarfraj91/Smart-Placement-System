@@ -4,33 +4,94 @@ import { v2 as cloudinary } from "cloudinary";
 import generateToken from "../utils/generateToken.js";
 import Job from "../models/Job.js";
 import JobApplication from "../models/JobApplication.js";
+import { uploadToCloudinary } from "../utils/uploadToCloudinary.js";
+
 // Register a new Company
+// export const registerCompany = async (req, res) => {
+//   const { name, email, password } = req.body;
+
+//   const imageFile = req.file;
+
+//   if (!name || !email || !password || !imageFile) {
+//     return res.json({ sucess: false, message: "All fields are required" });
+//   }
+
+//   try {
+//     const companyExists = await Company.findOne({ email });
+
+//     if (companyExists) {
+//       return res.json({ success: false, message: "Company Already Exists" });
+//     }
+
+//     const salt = await bcrypt.genSalt(10);
+//     const hashedPassword = await bcrypt.hash(password, salt);
+
+//     const imageUpload = await cloudinary.uploader.upload(imageFile.path);
+
+//     const company = await Company.create({
+//       name,
+//       email,
+//       password: hashedPassword,
+//       image: imageUpload.secure_url,
+//     });
+
+//     res.json({
+//       success: true,
+//       company: {
+//         _id: company._id,
+//         name: company.name,
+//         email: company.email,
+//         image: company.image,
+//       },
+//       token: generateToken(company._id),
+//     });
+//   } catch (error) {
+//     res.json({ success: false, message: error.message });
+//   }
+// };
+
+
 export const registerCompany = async (req, res) => {
   const { name, email, password } = req.body;
+  const file = req.file; // can be image OR pdf
 
-  const imageFile = req.file;
-
-  if (!name || !email || !password || !imageFile) {
-    return res.json({ sucess: false, message: "All fields are required" });
+  if (!name || !email || !password || !file) {
+    return res.json({ success: false, message: "All fields are required" });
   }
 
   try {
     const companyExists = await Company.findOne({ email });
 
     if (companyExists) {
-      return res.json({ success: false, message: "Company Already Exists" });
+      return res.json({ success: false, message: "Company already exists" });
     }
 
+    // Hash Password
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
-    const imageUpload = await cloudinary.uploader.upload(imageFile.path);
+    // Determine file type
+    // const isPDF = file.mimetype === "application/pdf";
 
+    // // Upload to Cloudinary
+    // const uploadOptions = {
+    //   folder: "companies",
+    //   resource_type: isPDF ? "raw" : "image"
+    // };
+
+    // const uploadedFile = await cloudinary.uploader.upload(file.path, uploadOptions);
+
+      const uploadResult = await uploadToCloudinary(file, "companies");
+    // uploadResult is Cloudinary result object
+    const fileUrl = uploadResult?.secure_url || uploadResult?.url;
+
+    // Save company
     const company = await Company.create({
       name,
       email,
       password: hashedPassword,
-      image: imageUpload.secure_url,
+      // image: uploadedFile.secure_url,  // this field holds both image/pdf
+      image: fileUrl,  // this field holds both image/pdf
     });
 
     res.json({
@@ -39,11 +100,13 @@ export const registerCompany = async (req, res) => {
         _id: company._id,
         name: company.name,
         email: company.email,
-        image: company.image,
+        image: company.image, // image/pdf URL
       },
       token: generateToken(company._id),
     });
+
   } catch (error) {
+    console.error("Error:", error);
     res.json({ success: false, message: error.message });
   }
 };

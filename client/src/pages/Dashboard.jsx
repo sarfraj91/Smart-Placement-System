@@ -1,8 +1,9 @@
 // Fully Redesigned Futuristic Dashboard with Glassmorphism, Animations & Widgets
+//dashboard for admin after login
 import React, { useContext, useEffect, useState } from "react";
 import { NavLink, Outlet, useNavigate, useLocation } from "react-router-dom";
 import { AppContext } from "../context/AppContext";
-import logo from "../assets/newlogo.svg";
+import logo from "../assets/logo.svg";
 import { motion, AnimatePresence } from "framer-motion";
 
 const Dashboard = () => {
@@ -12,7 +13,8 @@ const Dashboard = () => {
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [currentTime, setCurrentTime] = useState(new Date());
   const [activeTab, setActiveTab] = useState("");
-  const { companyData, setCompanyData, setCompanyToken } = useContext(AppContext);
+  const { companyData, setCompanyData, setCompanyToken } =
+    useContext(AppContext);
 
   useEffect(() => {
     const timer = setInterval(() => setCurrentTime(new Date()), 60000);
@@ -35,10 +37,19 @@ const Dashboard = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const formatTime = date => date.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
+  const formatTime = (date) =>
+    date.toLocaleTimeString("en-US", {
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: true,
+    });
   const getGreeting = () => {
     const hour = currentTime.getHours();
-    return hour < 12 ? "Good Morning" : hour < 18 ? "Good Afternoon" : "Good Evening";
+    return hour < 12
+      ? "Good Morning"
+      : hour < 18
+        ? "Good Afternoon"
+        : "Good Evening";
   };
   const logout = () => {
     setCompanyToken(null);
@@ -66,13 +77,20 @@ const Dashboard = () => {
             className="fixed lg:static left-0 top-0 w-72 h-full bg-white/60 backdrop-blur-md  z-50 flex flex-col justify-between  border-r border-white/30"
           >
             <div className="p-6">
-              <img src={logo} alt="Logo" className="h-15 mb-8 cursor-pointer" onClick={() => navigate("/")} />
+              {/* <img src={logo} alt="Logo" className="h-15 mb-8 cursor-pointer" onClick={() => navigate("/")} /> */}
+
+              <span className="text-2xl font-bold bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 bg-clip-text text-transparent">
+                College Placement System
+              </span>
+
               <div className="space-y-3">
                 {navItems.map(({ path, label, icon }, i) => (
                   <NavLink
                     key={i}
                     to={`/dashboard/${path}`}
-                    className={({ isActive }) => `flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 text-sm font-medium  hover:scale-[1.02] ${isActive ? "bg-indigo-600 text-white" : "text-gray-800 hover:bg-white/20"}`}
+                    className={({ isActive }) =>
+                      `flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 text-sm font-medium  hover:scale-[1.02] ${isActive ? "bg-indigo-600 text-white" : "text-gray-800 hover:bg-white/20"}`
+                    }
                   >
                     <span className="text-lg">{icon}</span>
                     <span>{label}</span>
@@ -86,14 +104,18 @@ const Dashboard = () => {
                   {companyData?.name?.[0] || "C"}
                 </div>
                 <div>
-                  <p className="text-sm font-semibold text-indigo-800">{companyData?.name}</p>
-                  <p className="text-xs text-indigo-500">Recruiter Mode</p>
+                  <p className="text-sm font-semibold text-indigo-800">
+                    {companyData?.name}
+                  </p>
+                  <p className="text-xs text-indigo-500">Admin Mode</p>
                 </div>
               </div>
               <button
                 onClick={logout}
                 className="mt-4 text-sm text-red-500 hover:underline w-full text-left"
-              >Sign out</button>
+              >
+                Sign out
+              </button>
             </div>
           </motion.aside>
         )}
@@ -109,12 +131,22 @@ const Dashboard = () => {
         >
           <div>
             <h1 className="text-2xl font-bold text-gray-800">
-              {activeTab.replace(/-/g, " ").replace(/\b\w/g, l => l.toUpperCase()) || "Dashboard"}
+              {activeTab
+                .replace(/-/g, " ")
+                .replace(/\b\w/g, (l) => l.toUpperCase()) || "Dashboard"}
             </h1>
-            <p className="text-sm text-gray-500 mt-1">{currentTime.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}</p>
+            <p className="text-sm text-gray-500 mt-1">
+              {currentTime.toLocaleDateString("en-US", {
+                weekday: "long",
+                month: "long",
+                day: "numeric",
+              })}
+            </p>
           </div>
           <div className="text-right">
-            <p className="text-sm text-gray-600 font-semibold">{getGreeting()},</p>
+            <p className="text-sm text-gray-600 font-semibold">
+              {getGreeting()},
+            </p>
             <p className="text-xs text-gray-500">{companyData?.name}</p>
             <p className="text-sm text-gray-400">{formatTime(currentTime)}</p>
           </div>
@@ -129,8 +161,6 @@ const Dashboard = () => {
           >
             <Outlet />
           </motion.div>
-
-          
         </main>
       </div>
     </div>

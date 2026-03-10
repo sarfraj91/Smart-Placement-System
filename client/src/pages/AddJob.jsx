@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import Quill from "quill";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { JobCategories, JobLocations } from "../assets/assets";
@@ -163,7 +164,7 @@ const AddJob = () => {
                 </label>
                 <div className="relative">
                   <span className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-gray-500">
-                    $
+                    Rs.
                   </span>
                   <input
                     type="number"
@@ -175,7 +176,7 @@ const AddJob = () => {
                     className="w-full pl-8 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all duration-200"
                   />
                 </div>
-                <p className="mt-1 text-xs text-gray-500">Enter the annual salary in USD</p>
+                <p className="mt-1 text-xs text-gray-500">Enter the annual salary in Rupees</p>
               </div>
             </div>
           </div>
@@ -332,7 +333,7 @@ const AddJob = () => {
                     </div>
                   </div>
                   <div className="text-right">
-                    <span className="text-lg font-bold text-gray-900">${salary.toLocaleString()}</span>
+                    <span className="text-lg font-bold text-gray-900">Rs.{salary.toLocaleString()}</span>
                     <p className="text-sm text-gray-500">per year</p>
                   </div>
                 </div>

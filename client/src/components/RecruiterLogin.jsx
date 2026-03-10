@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useContext, useState, useRef } from "react";
 import { AppContext } from "../context/AppContext";
 import axios from "axios";
@@ -218,7 +219,7 @@ const RecruiterLogin = () => {
             </h1>
             <p className="text-sm text-center text-gray-500">
               {state === "Login" 
-                ? "Access your recruiter dashboard" 
+                ? "Access your admin dashboard" 
                 : isTextDataSubmited 
                   ? "Upload your company logo to complete setup" 
                   : "Create an account to find top talent"
@@ -284,7 +285,7 @@ const RecruiterLogin = () => {
                     <div className="space-y-1.5">
                       <label htmlFor="company-name" className="text-sm font-medium text-gray-700 ml-1 flex items-center gap-1.5">
                         <User size={14} className="text-gray-500" />
-                        Company Name
+                        Username
                       </label>
                       <input
                         id="company-name"

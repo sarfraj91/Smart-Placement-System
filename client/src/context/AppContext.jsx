@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { createContext, useEffect, useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -7,7 +8,7 @@ export const AppContext = createContext();
 
 export const AppContextProvider = (props) => {
 
-    const backendUrl = import.meta.env.VITE_BACKEND_URL
+    const backendUrl = import.meta.env.VITE_BACKEND_URL 
 
     const {user} = useUser()
     const {getToken} = useAuth()
@@ -54,6 +55,7 @@ export const AppContextProvider = (props) => {
 const fetchCompanyData = async () => {
     try {
         const response = await axios.get(backendUrl + '/api/company/company',{headers: {token: companyToken}});
+        console.log(backendUrl);
         const data = response.data;
         console.log(data); // Move the console.log statement here
 
@@ -173,3 +175,5 @@ useEffect(() => {
     )
 
 }
+
+

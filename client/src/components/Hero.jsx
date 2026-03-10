@@ -89,7 +89,7 @@ const Hero = () => {
             >
               Find Your <span className="text-yellow-300">Dream Job</span>
               <br />
-              With Prodigy
+              With College Placement System
             </motion.h1>
 
             <motion.p
